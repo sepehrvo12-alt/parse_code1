@@ -1,4 +1,4 @@
-// این دیکشنری برای تطبیق الگوها استفاده می‌شود
+// dictionary.js - دیکشنری سراسری
 const dictionary = {
   // اعمال پایه
   "چاپ کن": "console.log",
@@ -43,4 +43,7 @@ const dictionary = {
   "نامعین": "undefined"
 };
 
-export default dictionary;
+// در دسترس قراردادن برای سایر اسکریپت‌ها
+if (typeof window !== 'undefined') {
+  window.dictionary = dictionary;
+}
