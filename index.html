@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پارس کده</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- متای CSP برای رفع اخطار امنیتی (اختیاری) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self';">
 </head>
 <body>
     <div id="terminal">
@@ -14,6 +16,10 @@
             <input type="text" id="command-input" autofocus>
         </div>
     </div>
-    <script src="renderer.js"></script>  <!-- اسم فایل درست: renderer.js -->
+
+    <!-- ترتیب مهم است: اول dictionary، بعد parser، بعد renderer -->
+    <script src="dictionary.js"></script>
+    <script src="parser.js"></script>
+    <script src="renderer.js"></script>
 </body>
 </html>
