@@ -1,8 +1,7 @@
-import dictionary from './dictionary.js';
-
+// parser.js - موتور تبدیل وابسته به dictionary سراسری
 class Parser {
   constructor() {
-    this.dict = dictionary;
+    this.dict = window.dictionary || {};
     this.rules = [
       // الگو: چاپ کن ...
       { pattern: /^چاپ کن (.*)$/, replacer: (match, p1) => `console.log(${this.parseValue(p1)})` },
@@ -39,7 +38,7 @@ class Parser {
   }
 
   parseExpression(expr) {
-    // جایگزینی کلمات کلیدی در عبارت (مثل "x مساوی ۵")
+    // جایگزینی کلمات کلیدی در عبارت
     let result = expr;
     for (let [fa, en] of Object.entries(this.dict)) {
       result = result.replace(new RegExp(fa, 'g'), en);
@@ -48,7 +47,6 @@ class Parser {
   }
 
   parseStatement(stmt) {
-    // برای سادگی، همان parse را روی statement صدا می‌زنیم (ممکن است بازگشتی شود)
     return this.parse(stmt).code;
   }
 
@@ -56,7 +54,6 @@ class Parser {
     input = input.trim();
     if (input === '') return { code: '', error: null };
 
-    // بررسی تطبیق با قواعد
     for (let rule of this.rules) {
       const match = input.match(rule.pattern);
       if (match) {
@@ -69,9 +66,10 @@ class Parser {
       }
     }
 
-    // اگر هیچ قاعده‌ای مطابقت نداشت، خطای 401
     return { code: null, error: { type: 401, message: 'دستور نامفهوم. لطفاً ساده‌تر بگویید.' } };
   }
 }
 
-export default Parser;
+if (typeof window !== 'undefined') {
+  window.Parser = Parser;
+}
